@@ -12,7 +12,7 @@ import MockAdapter from "axios-mock-adapter";
 const mock = new MockAdapter(axios);
 
 mock
-  .onPost(`${config.endpoint}/auth/login`, {
+  .onPost(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/login`, {
     username: "crio.do",
     password: "learnbydoing",
   })
@@ -24,7 +24,7 @@ mock
   });
 
 mock
-  .onPost(`${config.endpoint}/auth/login`, {
+  .onPost(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/login`, {
     username: "crio.do",
     password: "wrongpassword",
   })
@@ -147,7 +147,7 @@ describe("Login Page", () => {
     });
 
     const loginPostCall = mock.history.post.find(
-      (req) => req.url === `${config.endpoint}/auth/login`
+      (req) => req.url === `${process.env.REACT_APP_BACKEND_BASE_URL}/auth/login`
     );
     expect(loginPostCall).toBeTruthy();
   });
@@ -167,7 +167,7 @@ describe("Login Page", () => {
     });
 
     const loginPostCall = mock.history.post.find(
-      (req) => req.url === `${config.endpoint}/auth/login`
+      (req) => req.url === `${process.env.REACT_APP_BACKEND_BASE_URL}/auth/login`
     );
 
     expect(JSON.parse(loginPostCall.data)).toEqual(

@@ -85,16 +85,16 @@ const addToCartResponse = [
   },
 ];
 
-mock.onGet(`${config.endpoint}/products`).reply(200, productsResponse);
-mock.onGet(`${config.endpoint}/cart`).reply(200, cartResponse);
+mock.onGet(`${.process.env.REACT_APP_BACKEND_BASE_URL}/products`).reply(200, productsResponse);
+mock.onGet(`${process.env.REACT_APP_BACKEND_BASE_URL}/cart`).reply(200, cartResponse);
 mock
-  .onPost(`${config.endpoint}/cart`, { productId: "PmInA797xJhMIPti", qty: 3 })
+  .onPost(`${process.env.REACT_APP_BACKEND_BASE_URL}/cart`, { productId: "PmInA797xJhMIPti", qty: 3 })
   .reply(200, cartAddResponse);
 mock
-  .onPost(`${config.endpoint}/cart`, { productId: "TwMM4OAhmK0VQ93S", qty: 0 })
+  .onPost(`${process.env.REACT_APP_BACKEND_BASE_URL}/cart`, { productId: "TwMM4OAhmK0VQ93S", qty: 0 })
   .reply(200, cartRemoveResponse);
 mock
-  .onPost(`${config.endpoint}/cart`, { productId: "KCRwjF7lN97HnEaY", qty: 1 })
+  .onPost(`${process.env.REACT_APP_BACKEND_BASE_URL}/cart`, { productId: "KCRwjF7lN97HnEaY", qty: 1 })
   .reply(200, addToCartResponse);
 
 jest.useFakeTimers();
@@ -135,18 +135,18 @@ describe("Cart Component", () => {
 
   it("should perform an API call to fetch products", () => {
     const getProducts = mock.history.get.findIndex(
-      (req) => req.url === `${config.endpoint}/products`
+      (req) => req.url === `${process.env.REACT_APP_BACKEND_BASE_URL}/products`
     );
     expect(getProducts).not.toBe(-1);
   });
 
   it("should make GET request to the get cart items", () => {
     const getCart = mock.history.get.find(
-      (req) => req.url === `${config.endpoint}/cart`
+      (req) => req.url === `${process.env.REACT_APP_BACKEND_BASE_URL}/cart`
     );
 
     expect(getCart).toBeTruthy();
-    expect(getCart.url).toBe(`${config.endpoint}/cart`);
+    expect(getCart.url).toBe(`${process.env.REACT_APP_BACKEND_BASE_URL}/cart`);
     expect(getCart.headers.Authorization).toBe(
       `Bearer ${localStorage.getItem("token")}`
     );
@@ -181,11 +181,11 @@ describe("Cart Component", () => {
     expect(itemQty[0].textContent).toBe("3");
 
     const cartAddCall = mock.history.post.find(
-      (req) => req.url === `${config.endpoint}/cart`
+      (req) => req.url === `${process.env.REACT_APP_BACKEND_BASE_URL}/cart`
     );
 
     expect(cartAddCall).toBeTruthy();
-    expect(cartAddCall.url).toBe(`${config.endpoint}/cart`);
+    expect(cartAddCall.url).toBe(`${process.env.REACT_APP_BACKEND_BASE_URL}/cart`);
     expect(cartAddCall.headers.Authorization).toBe(
       `Bearer ${localStorage.getItem("token")}`
     );
@@ -209,12 +209,12 @@ describe("Cart Component", () => {
 
     const cartRemoveCall = mock.history.post.find(
       (req) =>
-        req.url === `${config.endpoint}/cart` &&
+        req.url === `${process.env.REACT_APP_BACKEND_BASE_URL}/cart` &&
         req.data === '{"productId":"TwMM4OAhmK0VQ93S","qty":0}'
     );
 
     expect(cartRemoveCall).toBeTruthy();
-    expect(cartRemoveCall.url).toBe(`${config.endpoint}/cart`);
+    expect(cartRemoveCall.url).toBe(`${process.env.REACT_APP_BACKEND_BASE_URL}/cart`);
     expect(cartRemoveCall.headers.Authorization).toBe(
       `Bearer ${localStorage.getItem("token")}`
     );

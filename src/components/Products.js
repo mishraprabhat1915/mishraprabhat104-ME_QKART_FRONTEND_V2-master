@@ -56,7 +56,7 @@ const Products = () => {
   const performAPICall = async () => {
     setLoad(true);
     try {
-      const response = await axios.get(`${config.endpoint}/products`);
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/products`);
       setData((val) => ({ ...val, data: response.data }));
       // setProductData(response.data);
       setSuccess(true);
@@ -74,7 +74,7 @@ const Products = () => {
     const searchProduct = text.target.value;
     try {
       const response = await axios(
-        `${config.endpoint}/products/search?value=${searchProduct}`
+        `${process.env.REACT_APP_BACKEND_BASE_URL}/products/search?value=${searchProduct}`
       );
       // console.log("searchData->", response.data);
       setData((val) => ({ ...val, data: response.data }));
@@ -97,7 +97,7 @@ const Products = () => {
 
     try {
       // TODO: CRIO_TASK_MODULE_CART - Pass Bearer token inside "Authorization" header to get data from "GET /cart" API and return the response data
-      const response = await axios.get(`${config.endpoint}/cart`, {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/cart`, {
         headers: {
           "Authorization": `Bearer ${token}`
         }
@@ -138,12 +138,12 @@ const Products = () => {
    *
    */
   const isItemInCart = (items, productId) => {
-    console.log("isItemIncart->>>>>", items===undefined, productId)
+    console.log("isItemIncart->>>>>", items === undefined, productId)
     // console.log("cart data>>>", data.items.length);
 
-    if(items === undefined) {return false};
+    if (items === undefined) { return false };
 
-    
+
     let itemAlreadyPresentInCart = false;
     // if(data.items.length)
     items.map((item) => {
@@ -155,7 +155,7 @@ const Products = () => {
     })
     console.log("itemAlreadyPresentInCart", itemAlreadyPresentInCart);
 
-   return itemAlreadyPresentInCart;
+    return itemAlreadyPresentInCart;
     // console.log("e", items[0].productId)
     // console.log("pr", productId);
 
@@ -228,10 +228,10 @@ const Products = () => {
     }
   };
 
-  const addToCartMain = async(productId, qty) => {
+  const addToCartMain = async (productId, qty) => {
     try {
       console.log("test")
-      const response = await axios.post(`${config.endpoint}/cart`,
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/cart`,
         {
           "productId": productId,
           "qty": qty,

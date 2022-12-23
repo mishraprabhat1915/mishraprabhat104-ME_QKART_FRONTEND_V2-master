@@ -48,8 +48,8 @@ const cartResponse = [
   },
 ];
 
-mock.onGet(`${config.endpoint}/products`).reply(200, productsResponse);
-mock.onGet(`${config.endpoint}/cart`).reply(200, cartResponse);
+mock.onGet(`${process.env.REACT_APP_BACKEND_BASE_URL}/products`).reply(200, productsResponse);
+mock.onGet(`${process.env.REACT_APP_BACKEND_BASE_URL}/cart`).reply(200, cartResponse);
 
 jest.useFakeTimers();
 
@@ -191,7 +191,7 @@ describe("Products Page", () => {
 
   it("should make a GET request to load products", () => {
     const getProductsCall = mock.history.get.find(
-      (req) => req.url === `${config.endpoint}/products`
+      (req) => req.url === `${process.env.REACT_APP_BACKEND_BASE_URL}/products`
     );
     expect(getProductsCall).toBeTruthy();
   });
@@ -231,7 +231,7 @@ describe("Products Page", () => {
       },
     ];
     mock
-      .onGet(`${config.endpoint}/products/search?value=smash`)
+      .onGet(`${process.env.REACT_APP_BACKEND_BASE_URL}/products/search?value=smash`)
       .reply(200, searchResponse);
 
     const search = screen.getAllByPlaceholderText(/search/i)[0];
@@ -245,17 +245,17 @@ describe("Products Page", () => {
     });
 
     const searchCall = mock.history.get.find(
-      (req) => req.url === `${config.endpoint}/products/search?value=smash`
+      (req) => req.url === `${process.env.REACT_APP_BACKEND_BASE_URL}/products/search?value=smash`
     );
     expect(searchCall).toBeTruthy();
     expect(searchCall.url).toEqual(
-      `${config.endpoint}/products/search?value=smash`
+      `${process.env.REACT_APP_BACKEND_BASE_URL}/products/search?value=smash`
     );
   });
 
   it("should show all products if search empty", async () => {
     const search = screen.getAllByPlaceholderText(/search/i)[0];
-    mock.onGet(`${config.endpoint}/products/search?value=`).reply(404, []);
+    mock.onGet(`${process.env.REACT_APP_BACKEND_BASE_URL}/products/search?value=`).reply(404, []);
 
     userEvent.type(search, "");
 
@@ -283,7 +283,7 @@ describe("Products Page", () => {
     ];
 
     mock
-      .onGet(`${config.endpoint}/products/search?value=smash`)
+      .onGet(`${process.env.REACT_APP_BACKEND_BASE_URL}/products/search?value=smash`)
       .reply(200, searchResponse);
 
     const search = screen.getAllByPlaceholderText(/search/i)[0];
@@ -305,7 +305,7 @@ describe("Products Page", () => {
 
   it("should 'No Products Found' if search string does get any items", async () => {
     mock
-      .onGet(`${config.endpoint}/products/search?value=smasher`)
+      .onGet(`${process.env.REACT_APP_BACKEND_BASE_URL}/products/search?value=smasher`)
       .reply(404, []);
 
     // Matches by "placeholder" attribute value set for search input field - should have "search" in the placeholder
@@ -318,7 +318,7 @@ describe("Products Page", () => {
     });
 
     const searchCall = mock.history.get.find(
-      (req) => req.url === `${config.endpoint}/products/search?value=smasher`
+      (req) => req.url === `${process.env.REACT_APP_BACKEND_BASE_URL}/products/search?value=smasher`
     );
     const text = await screen.findByText(/No products found/i);
     const addToCartBtn = screen.queryAllByRole("button", {
@@ -365,10 +365,10 @@ describe("Products Page", () => {
     ];
 
     mock
-      .onGet(`${config.endpoint}/products/search?value=leather`)
+      .onGet(`${process.env.REACT_APP_BACKEND_BASE_URL}/products/search?value=leather`)
       .reply(200, response1);
     mock
-      .onGet(`${config.endpoint}/products/search?value=leathere`)
+      .onGet(`${process.env.REACT_APP_BACKEND_BASE_URL}/products/search?value=leathere`)
       .reply(200, response2);
 
     const search = screen.getAllByPlaceholderText(/search/i)[0];
@@ -419,7 +419,7 @@ describe("Products Page", () => {
     ];
 
     mock
-      .onGet(`${config.endpoint}/products/search?value=badminton`)
+      .onGet(`${process.env.REACT_APP_BACKEND_BASE_URL}/products/search?value=badminton`)
       .reply(200, searchResponse);
 
     const search = screen.getAllByPlaceholderText(/search/i)[0];
@@ -431,7 +431,7 @@ describe("Products Page", () => {
     });
 
     const searchCall = mock.history.get.find(
-      (req) => req.url === `${config.endpoint}/products/search?value=badminton`
+      (req) => req.url === `${process.env.REACT_APP_BACKEND_BASE_URL}/products/search?value=badminton`
     );
     expect(searchCall).toBeFalsy();
 
@@ -440,7 +440,7 @@ describe("Products Page", () => {
     });
 
     const searchCall2 = mock.history.get.find(
-      (req) => req.url === `${config.endpoint}/products/search?value=badminton`
+      (req) => req.url === `${process.env.REACT_APP_BACKEND_BASE_URL}/products/search?value=badminton`
     );
     expect(searchCall2).toBeTruthy();
   });

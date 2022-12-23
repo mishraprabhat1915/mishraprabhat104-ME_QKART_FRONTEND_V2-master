@@ -1,6 +1,7 @@
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Products from "./components/Products";
+import Checkout from "./components/Checkout";
 import ipConfig from "./ipConfig.json";
 import { Route, Switch } from "react-router-dom";
 
@@ -14,6 +15,9 @@ function App() {
       <Switch>
         <Route exact path="/">
           <Products />
+        </Route>
+        <Route path="/checkout">
+          <Checkout/>
         </Route>
         <Route path="/register">
           <Register />

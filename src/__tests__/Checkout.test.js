@@ -70,16 +70,16 @@ const updatedAddressResponse = [
   },
 ];
 
-mock.onGet(`${config.endpoint}/products`).reply(200, productsResponse);
-mock.onGet(`${config.endpoint}/cart`).reply(200, cartResponse);
-mock.onGet(`${config.endpoint}/user/addresses`).reply(200, addressResponse);
+mock.onGet(`${process.env.REACT_APP_BACKEND_BASE_URL}/products`).reply(200, productsResponse);
+mock.onGet(`${process.env.REACT_APP_BACKEND_BASE_URL}/cart`).reply(200, cartResponse);
+mock.onGet(`${process.env.REACT_APP_BACKEND_BASE_URL}/user/addresses`).reply(200, addressResponse);
 mock
-  .onPost(`${config.endpoint}/user/addresses`)
+  .onPost(`${process.env.REACT_APP_BACKEND_BASE_URL}/user/addresses`)
   .reply(200, updatedAddressResponse);
 mock
-  .onDelete(`${config.endpoint}/user/addresses/Tzd6OaX9Zaz2aEPX9ks1n`)
+  .onDelete(`${process.env.REACT_APP_BACKEND_BASE_URL}/user/addresses/Tzd6OaX9Zaz2aEPX9ks1n`)
   .reply(200, []);
-mock.onPost(`${config.endpoint}/cart/checkout`).reply(200, { success: true });
+mock.onPost(`${process.env.REACT_APP_BACKEND_BASE_URL}/cart/checkout`).reply(200, { success: true });
 
 describe("Checkout Page", () => {
   // Allow access to useHistory()
@@ -122,7 +122,7 @@ describe("Checkout Page", () => {
 
   it("should retrieve products", () => {
     const getCalls = mock.history.get.map((call) => call.url);
-    expect(getCalls).toContain(`${config.endpoint}/products`);
+    expect(getCalls).toContain(`${process.env.REACT_APP_BACKEND_BASE_URL}/products`);
   });
 
   it("should retieve addresses of the user", () => {
@@ -131,10 +131,10 @@ describe("Checkout Page", () => {
       headers: call.headers,
     }));
     const addressCall = getCalls.find(
-      (call) => call.url === `${config.endpoint}/user/addresses`
+      (call) => call.url === `${process.env.REACT_APP_BACKEND_BASE_URL}/user/addresses`
     );
 
-    expect(addressCall.url).toBe(`${config.endpoint}/user/addresses`);
+    expect(addressCall.url).toBe(`${process.env.REACT_APP_BACKEND_BASE_URL}/user/addresses`);
     expect(addressCall.headers.Authorization).toBe(
       `Bearer ${localStorage.getItem("token")}`
     );
@@ -146,10 +146,10 @@ describe("Checkout Page", () => {
       headers: call.headers,
     }));
     const cartCall = getCalls.find(
-      (call) => call.url === `${config.endpoint}/cart`
+      (call) => call.url === `${process.env.REACT_APP_BACKEND_BASE_URL}/cart`
     );
 
-    expect(cartCall.url).toBe(`${config.endpoint}/cart`);
+    expect(cartCall.url).toBe(`${process.env.REACT_APP_BACKEND_BASE_URL}/cart`);
     expect(cartCall.headers.Authorization).toBe(
       `Bearer ${localStorage.getItem("token")}`
     );
@@ -252,10 +252,10 @@ describe("Checkout Page", () => {
     });
 
     const addressCall = mock.history.post.find(
-      (call) => call.url === `${config.endpoint}/user/addresses`
+      (call) => call.url === `${process.env.REACT_APP_BACKEND_BASE_URL}/user/addresses`
     );
 
-    expect(addressCall.url).toBe(`${config.endpoint}/user/addresses`);
+    expect(addressCall.url).toBe(`${process.env.REACT_APP_BACKEND_BASE_URL}/user/addresses`);
     expect(addressCall.headers.Authorization).toBe(
       `Bearer ${localStorage.getItem("token")}`
     );
@@ -276,7 +276,7 @@ describe("Checkout Page", () => {
 
     const deleteAddress = mock.history.delete.find(
       (req) =>
-        req.url === `${config.endpoint}/user/addresses/Tzd6OaX9Zaz2aEPX9ks1n`
+        req.url === `${process.env.REACT_APP_BACKEND_BASE_URL}/user/addresses/Tzd6OaX9Zaz2aEPX9ks1n`
     );
 
     expect(deleteAddress).toBeTruthy();
@@ -284,7 +284,7 @@ describe("Checkout Page", () => {
       `Bearer ${localStorage.getItem("token")}`
     );
     expect(deleteAddress.url).toBe(
-      `${config.endpoint}/user/addresses/Tzd6OaX9Zaz2aEPX9ks1n`
+      `${process.env.REACT_APP_BACKEND_BASE_URL}/user/addresses/Tzd6OaX9Zaz2aEPX9ks1n`
     );
 
     expect(screen.queryByText(/Some address/i)).toBeNull();
@@ -307,9 +307,9 @@ describe("Checkout Page", () => {
     }));
 
     const checkoutCall = postCalls.find(
-      (call) => call.url === `${config.endpoint}/cart/checkout`
+      (call) => call.url === `${process.env.REACT_APP_BACKEND_BASE_URL}/cart/checkout`
     );
-    expect(checkoutCall.url).toBe(`${config.endpoint}/cart/checkout`);
+    expect(checkoutCall.url).toBe(`${process.env.REACT_APP_BACKEND_BASE_URL}/cart/checkout`);
     expect(checkoutCall.headers.Authorization).toBe(
       `Bearer ${localStorage.getItem("token")}`
     );

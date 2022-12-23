@@ -12,14 +12,14 @@ import MockAdapter from "axios-mock-adapter";
 const mock = new MockAdapter(axios);
 
 mock
-  .onPost(`${config.endpoint}/auth/register`, {
+  .onPost(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/register`, {
     username: "crio.do",
     password: "learnbydoing",
   })
   .reply(201, { success: true });
 
 mock
-  .onPost(`${config.endpoint}/auth/register`, {
+  .onPost(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/register`, {
     username: "viveknigam3003",
     password: "newpass",
   })
@@ -181,7 +181,7 @@ describe("Register Page", () => {
     });
 
     const registerCall = mock.history.post.find(
-      (req) => req.url === `${config.endpoint}/auth/register`
+      (req) => req.url === `${process.env.REACT_APP_BACKEND_BASE_URL}/auth/register`
     );
     expect(registerCall).toBeTruthy();
   });
@@ -203,10 +203,10 @@ describe("Register Page", () => {
     });
 
     const registerCall = mock.history.post.find(
-      (req) => req.url === `${config.endpoint}/auth/register`
+      (req) => req.url === `${process.env.REACT_APP_BACKEND_BASE_URL}/auth/register`
     );
 
-    expect(registerCall.url).toEqual(`${config.endpoint}/auth/register`);
+    expect(registerCall.url).toEqual(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/register`);
     expect(JSON.parse(registerCall.data)).toEqual(
       expect.objectContaining({
         username: request.username,

@@ -161,7 +161,7 @@ const Checkout = () => {
   // Fetch the entire products list
   const getProducts = async () => {
     try {
-      const response = await axios.get(`${config.endpoint}/products`);
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/products`);
 
       setProducts(response.data);
       return response.data;
@@ -184,7 +184,7 @@ const Checkout = () => {
   const fetchCart = async (token) => {
     if (!token) return;
     try {
-      const response = await axios.get(`${config.endpoint}/cart`, {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/cart`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -231,7 +231,7 @@ const Checkout = () => {
     if (!token) return;
 
     try {
-      const response = await axios.get(`${config.endpoint}/user/addresses`, {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/user/addresses`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -289,7 +289,7 @@ const Checkout = () => {
       // TODO: CRIO_TASK_MODULE_CHECKOUT - Add new address to the backend and display the latest list of addresses
       await axios
         .post(
-          `${config.endpoint}/user/addresses`,
+          `${process.env.REACT_APP_BACKEND_BASE_URL}/user/addresses`,
           { address: newAddress.value },
           {
             headers: {
@@ -361,7 +361,7 @@ const Checkout = () => {
     try {
       // TODO: CRIO_TASK_MODULE_CHECKOUT - Delete selected address from the backend and display the latest list of addresses
       await axios
-        .delete(`${config.endpoint}/user/addresses/${addressId}`, {
+        .delete(`${process.env.REACT_APP_BACKEND_BASE_URL}/user/addresses/${addressId}`, {
           headers: {
             Accept: "application/json, text/plain, /",
             Authorization: `Bearer ${token}`,
@@ -475,7 +475,7 @@ const Checkout = () => {
       try {
         await axios
           .post(
-            `${config.endpoint}/cart/checkout`,
+            `${process.env.REACT_APP_BACKEND_BASE_URL}/cart/checkout`,
             { addressId: addresses.selected },
             {
               headers: {

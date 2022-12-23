@@ -70,7 +70,7 @@ const Login = () => {
         setForm((form) => ({ ...form, load: true }));
 
         const response = await axios.post(
-          `${config.endpoint}/auth/login`,
+          `${process.env.REACT_APP_BACKEND_BASE_URL}/auth/login`,
           { username: formData.username,
           password: formData.password}
         );

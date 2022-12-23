@@ -31,7 +31,7 @@ const Register = () => {
     if (!validateInput(formData)) return;
     try{
       setLoading(true);
-      await axios.post(`${config.endpoint}/auth/register`,{
+      await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/register`,{
         username: formData.username,
         password: formData.password,
       });
