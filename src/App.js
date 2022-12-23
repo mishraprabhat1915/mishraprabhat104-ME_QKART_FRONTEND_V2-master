@@ -3,6 +3,7 @@ import Register from "./components/Register";
 import Products from "./components/Products";
 import Checkout from "./components/Checkout";
 import ipConfig from "./ipConfig.json";
+import Thanks from "./components/Thanks";
 import { Route, Switch } from "react-router-dom";
 
 export const config = {
@@ -24,6 +25,9 @@ function App() {
         </Route>
         <Route path="/login">
           <Login />
+        </Route>
+        <Route path="/thanks">
+          <Thanks />
         </Route>
       </Switch>
     </div>
